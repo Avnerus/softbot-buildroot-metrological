@@ -199,6 +199,12 @@ config BR2_PACKAGE_WPEFRAMEWORK_TUNER
 	help
 	  Tuner Plugin
 
+menuconfig BR2_PACKAGE_WPEFRAMEWORK_POWER
+    select BR2_PACKAGE_WPEFRAMEWORK_PLUGINS
+    bool "Power"
+    help
+      PowerManager Plugin
+
 config BR2_PACKAGE_WPEFRAMEWORK_TRACECONTROL
 	select BR2_PACKAGE_WPEFRAMEWORK_PLUGINS
 	bool "TraceControl"

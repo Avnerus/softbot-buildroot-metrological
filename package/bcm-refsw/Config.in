@@ -116,6 +116,29 @@ config BR2_PACKAGE_BCM_REFSW_EGLCUBE
 	help
 	  Build the EGL cube example, just for test and fun.
 
+config BR2_PACKAGE_BCM_REFSW_PMLIB
+	bool "pmlib"
+	default n
+	help
+	  Build the Power Manager library.
+
+if BR2_PACKAGE_BCM_REFSW_PMLIB
+
+choice
+	prompt "bcm-pmlib version"
+	default BR2_PACKAGE_BCM_PMLIB_3_14
+	help
+		Select the platform supporting version
+
+    config BR2_PACKAGE_BCM_PMLIB_3_14
+        bool "bcm-pmlib 3.14"
+
+    config BR2_PACKAGE_BCM_PMLIB_2_6
+        bool "bcm-pmlib 2.6"
+endchoice
+
+endif
+
 config BR2_PACKAGE_BCM_REFSW_NXCLIENT_EXAMPLES
 	bool "nxclient-examples"
 	default n
