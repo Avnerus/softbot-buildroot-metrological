@@ -4,26 +4,13 @@
 #
 ################################################################################
 
-GST1_PLUGINS_GOOD_VERSION = 1.10.4
+GST1_PLUGINS_GOOD_VERSION = 1.12.4
 GST1_PLUGINS_GOOD_SOURCE = gst-plugins-good-$(GST1_PLUGINS_GOOD_VERSION).tar.xz
 GST1_PLUGINS_GOOD_SITE = https://gstreamer.freedesktop.org/src/gst-plugins-good
 GST1_PLUGINS_GOOD_LICENSE_FILES = COPYING
-GST1_PLUGINS_GOOD_LICENSE = LGPLv2.1+
-
-ifeq ($(BR2_PACKAGE_GSTREAMER1_GIT),y)
-GST1_PLUGINS_GOOD_SITE = http://cgit.freedesktop.org/gstreamer/gst-plugins-good/snapshot
-BR_NO_CHECK_HASH_FOR += $(GST1_PLUGINS_GOOD_SOURCE)
-GST1_PLUGINS_GOOD_CONF_ENV += CFLAGS="$(TARGET_CFLAGS) -Wno-error"
-GST1_PLUGINS_GOOD_AUTORECONF = YES
-GST1_PLUGINS_GOOD_AUTORECONF_OPTS = -I $(@D)/common/m4
-GST1_PLUGINS_GOOD_GETTEXTIZE = YES
-GST1_PLUGINS_GOOD_POST_EXTRACT_HOOKS += GSTREAMER1_COMMON_EXTRACT
-GST1_PLUGINS_GOOD_PRE_CONFIGURE_HOOKS += GSTREAMER1_FIX_AUTOPOINT
-GST1_PLUGINS_GOOD_POST_INSTALL_TARGET_HOOKS += GSTREAMER1_REMOVE_LA_FILES
-endif
+GST1_PLUGINS_GOOD_LICENSE = LGPL-2.1+
 
 GST1_PLUGINS_GOOD_CONF_OPTS = \
-	CFLAGS="$(TARGET_CFLAGS) $(GSTREAMER1_EXTRA_COMPILER_OPTIONS)" \
 	--disable-valgrind \
 	--disable-examples \
 	--disable-directsound \
@@ -33,10 +20,7 @@ GST1_PLUGINS_GOOD_CONF_OPTS = \
 	--disable-osx_video \
 	--disable-aalib \
 	--disable-aalibtest \
-	--disable-libcaca \
-	--disable-esd \
-	--disable-esdtest
-
+	--disable-libcaca
 
 # Options which require currently unpackaged libraries
 GST1_PLUGINS_GOOD_CONF_OPTS += \
@@ -441,14 +425,6 @@ GST1_PLUGINS_GOOD_CONF_OPTS += --enable-bz2
 GST1_PLUGINS_GOOD_DEPENDENCIES += bzip2
 else
 GST1_PLUGINS_GOOD_CONF_OPTS += --disable-bz2
-endif
-
-define GST1_PLUGINS_GOOD_APPLY_DORNE_PATCHES
-	$(APPLY_PATCHES) $(@D) package/gstreamer1/gst1-plugins-good/dorne *.patch
-endef
-
-ifeq ($(BR2_PACKAGE_GST1_PLUGINS_DORNE),y)
-GST1_PLUGINS_GOOD_POST_PATCH_HOOKS += GST1_PLUGINS_GOOD_APPLY_DORNE_PATCHES
 endif
 
 $(eval $(autotools-package))
