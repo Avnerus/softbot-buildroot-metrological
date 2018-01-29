@@ -1,0 +1,5 @@
+config BR2_PACKAGE_SOFT_CONTROL_RUST
+       bool "soft control rust"
+       depends on BR2_PACKAGE_HOST_CARGO
+       help
+         Avner's Soft Control program written in Rust
