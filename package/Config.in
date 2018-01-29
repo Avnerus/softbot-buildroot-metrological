@@ -1889,3 +1889,8 @@ menu "Text editors and viewers"
 endmenu
 
 endmenu
+
+menu "Softbot"
+    source "package/soft_control_rust/Config.in"
+endmenu
+

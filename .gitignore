@@ -4,3 +4,4 @@ dl
 output*/
 .config*
 ..config*
+*.swp

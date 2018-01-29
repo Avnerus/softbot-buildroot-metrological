@@ -12,14 +12,15 @@ SOFT_CONTROL_RUST_LICENSE = Public Domain
 SOFT_CONTROL_RUST_DEPENDENCIES = host-cargo
 
 SOFT_CONTROL_RUST_CARGO_ENV = \
-    CARGO_HOME=$(HOST_DIR)/usr/share/cargo \
+    CARGO_HOME=$(HOST_DIR)/share/cargo \
     RUST_TARGET_PATH=$(HOST_DIR)/etc/rustc \
-	LD_LIBRARY_PATH=$(HOST_DIR)/usr/lib
+	LD_LIBRARY_PATH=$(HOST_DIR)/usr/lib \
+	PKG_CONFIG_ALLOW_CROSS=1
 
 
 SOFT_CONTROL_RUST_CARGO_OPTS = \
-    --target=$(GNU_TARGET_NAME) \
-    --manifest-path=$(@D)/Cargo.toml
+	--target=$(RUST_TARGET_NAME) \
+	--manifest-path=$(@D)/Cargo.toml
 
 ifeq ($(BR2_ENABLE_DEBUG),y)
 SOFT_CONTROL_RUST_CARGO_MODE = debug
@@ -35,8 +36,8 @@ endef
 
 define SOFT_CONTROL_RUST_INSTALL_TARGET_CMDS
     $(INSTALL) -D \
-            $(@D)/target/$(GNU_TARGET_NAME)/$(SOFT_CONTROL_RUST_CARGO_MODE)/soft_control_rust \
-            $(TARGET_DIR)/usr/bin/soft_control_rust
+            $(@D)/target/$(RUST_TARGET_NAME)/$(SOFT_CONTROL_RUST_CARGO_MODE)/soft_control \
+            $(TARGET_DIR)/usr/bin/soft_control
 endef
 
 $(eval $(generic-package))
