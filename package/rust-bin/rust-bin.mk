@@ -38,6 +38,7 @@ HOST_RUST_BIN_INSTALL_OPTS = \
 	--prefix=$(HOST_DIR) \
 	--disable-ldconfig
 
+ifeq ($(BR2_PACKAGE_HOST_RUST_BIN),y)
 define HOST_RUST_BIN_INSTALL_RUSTC
 	(cd $(@D); \
 		./install.sh $(HOST_RUST_BIN_INSTALL_OPTS))

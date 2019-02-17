@@ -80,3 +80,4 @@ config BR2_PACKAGE_PROVIDES_HOST_RUSTC
 	# Default to host-rust-bin as long as host arch supports it
 	default "host-rust-bin" if !BR2_PACKAGE_HOST_RUST
 	depends on BR2_PACKAGE_HOST_RUSTC_ARCH_SUPPORTS
+
