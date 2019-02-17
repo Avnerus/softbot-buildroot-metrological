@@ -23,7 +23,7 @@ git clone https://github.com/WebPlatformForEmbedded/buildroot.git
 
 Select a configuration for your embedded device from the `configs/` directory. For example for the Raspberry Pi 2 device:
 ```
-make raspberrypi2_wpe_defconfig
+make raspberrypi3_wpe_defconfig
 ```
 Buildroot provides you a menuconfig option for the first time. Select additional packages if you require or exit and save the config.
 
