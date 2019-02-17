@@ -1,9 +1,1 @@
-[package]
-name = "soft_control"
-version = "0.1.0"
-authors = ["Avnerus <avnerus@gmail.com>"]
-
-[dependencies]
-ws = "*"
-serialport = "*"
-argparse = "*"
+/home/avnerus/Projects/softbot/softcontrol/rust/soft_control/Cargo.toml
