@@ -4,7 +4,7 @@
 #
 ################################################################################
 
-RUST_VERSION = 1.23.0
+RUST_VERSION = 1.29.2
 RUST_SOURCE = rustc-$(RUST_VERSION)-src.tar.xz
 RUST_SITE = https://static.rust-lang.org/dist
 RUST_LICENSE = Apache-2.0 or MIT
@@ -48,10 +48,10 @@ HOST_RUST_POST_EXTRACT_HOOKS += HOST_RUST_EXCLUDE_ORIG_FILES
 define HOST_RUST_CONFIGURE_CMDS
 	( \
 		echo '[build]'; \
-		echo 'target = ["$(RUST_TARGET_NAME)"]'; \
+		echo 'target = ["$(RUSTC_TARGET_NAME)"]'; \
 		echo 'cargo = "$(HOST_CARGO_BIN_DIR)/cargo/bin/cargo"'; \
 		echo 'rustc = "$(HOST_RUST_BIN_DIR)/rustc/bin/rustc"'; \
-		echo 'python = "$(HOST_DIR)/usr/bin/python2"'; \
+		echo 'python = "$(HOST_DIR)/bin/python2"'; \
 		echo 'submodules = false'; \
 		echo 'vendor = true'; \
 		echo 'compiler-docs = false'; \
@@ -61,19 +61,20 @@ define HOST_RUST_CONFIGURE_CMDS
 		echo 'prefix = "$(HOST_DIR)"'; \
 		echo '[rust]'; \
 		echo 'use-jemalloc = $(HOST_RUST_JEMALLOC_ENABLED)'; \
-		echo '[target.$(RUST_TARGET_NAME)]'; \
+		echo 'channel = "stable"'; \
+		echo '[target.$(RUSTC_TARGET_NAME)]'; \
 		echo 'cc = "$(TARGET_CROSS)gcc"'; \
 		echo $(HOST_RUST_JEMALLOC_CONF); \
 	) > $(@D)/config.toml
 endef
 
 define HOST_RUST_BUILD_CMDS
-	cd $(@D); $(HOST_MAKE_ENV) $(HOST_DIR)/usr/bin/python2 x.py build
+	cd $(@D); $(HOST_MAKE_ENV) $(HOST_DIR)/bin/python2 x.py build
 endef
 
 define HOST_RUST_INSTALL_CMDS
-	cd $(@D); $(HOST_MAKE_ENV) $(HOST_DIR)/usr/bin/python2 x.py dist
-	cd $(@D); $(HOST_MAKE_ENV) $(HOST_DIR)/usr/bin/python2 x.py install
+	cd $(@D); $(HOST_MAKE_ENV) $(HOST_DIR)/bin/python2 x.py dist
+	cd $(@D); $(HOST_MAKE_ENV) $(HOST_DIR)/bin/python2 x.py install
 endef
 
 $(eval $(host-generic-package))

@@ -19,7 +19,7 @@ SOFT_CONTROL_RUST_CARGO_ENV = \
 
 
 SOFT_CONTROL_RUST_CARGO_OPTS = \
-	--target=$(RUST_TARGET_NAME) \
+	--target=$(RUSTC_TARGET_NAME) \
 	--manifest-path=$(@D)/Cargo.toml
 
 ifeq ($(BR2_ENABLE_DEBUG),y)
@@ -36,7 +36,7 @@ endef
 
 define SOFT_CONTROL_RUST_INSTALL_TARGET_CMDS
     $(INSTALL) -D \
-            $(@D)/target/$(RUST_TARGET_NAME)/$(SOFT_CONTROL_RUST_CARGO_MODE)/soft_control \
+            $(@D)/target/$(RUSTC_TARGET_NAME)/$(SOFT_CONTROL_RUST_CARGO_MODE)/soft_control \
             $(TARGET_DIR)/usr/bin/soft_control
 endef
 

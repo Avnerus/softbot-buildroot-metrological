@@ -4,7 +4,7 @@
 #
 ################################################################################
 
-E2FSPROGS_VERSION = 1.43.4
+E2FSPROGS_VERSION = 1.44.5
 E2FSPROGS_SOURCE = e2fsprogs-$(E2FSPROGS_VERSION).tar.xz
 E2FSPROGS_SITE = $(BR2_KERNEL_MIRROR)/linux/kernel/people/tytso/e2fsprogs/v$(E2FSPROGS_VERSION)
 E2FSPROGS_LICENSE = GPLv2, BSD-3c (libuuid), MIT-like with advertising clause (libss and libet)
@@ -44,17 +44,9 @@ ifeq ($(BR2_nios2),y)
 E2FSPROGS_CONF_ENV += ac_cv_func_fallocate=no
 endif
 
-# Some programs are built for the host, but use definitions guessed by
-# the configure script (i.e with the cross-compiler). Help them by
-# saying that <sys/stat.h> is available on the host, which is needed
-# for util/subst.c to build properly.
-E2FSPROGS_CONF_ENV += BUILD_CFLAGS="-DHAVE_SYS_STAT_H"
+E2FSPROGS_CONF_ENV += ac_cv_path_LDCONFIG=true 
 
-# Disable use of the host magic.h, as on older hosts (e.g. RHEL 5)
-# it doesn't provide definitions expected by e2fsprogs support lib.
-HOST_E2FSPROGS_CONF_ENV += \
-	ac_cv_header_magic_h=no \
-	ac_cv_lib_magic_magic_file=no
+HOST_E2FSPROGS_CONF_ENV += ac_cv_path_LDCONFIG=true 
 
 ifeq ($(BR2_NEEDS_GETTEXT_IF_LOCALE),y)
 # util-linux libuuid pulls in libintl if needed, so ensure we also
