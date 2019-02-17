@@ -4,13 +4,13 @@
 #
 ################################################################################
 
-CARGO_VERSION = 0.24.0
+CARGO_VERSION = 0.26.0
 CARGO_SITE = $(call github,rust-lang,cargo,$(CARGO_VERSION))
 CARGO_LICENSE = Apache-2.0 or MIT
 CARGO_LICENSE_FILES = LICENSE-APACHE LICENSE-MIT
 
-CARGO_DEPS_SHA512 = 60c12ce49a53cf986490f5a5fdf606f0374677902edfdc4d48ab1ba6094f3f23efc59626cd3776649c9386a9cab2a60332e5693aad6acbcbb92132efdcf9fe21
-CARGO_DEPS_SITE = http://pkgs.fedoraproject.org/repo/pkgs/cargo/$(CARGO_DEPS_SOURCE)/sha512/$(CARGO_DEPS_SHA512)
+CARGO_DEPS_SHA512 = 6ed2a1644c9b18fc24ddad5350d41b6c36cd5b62de4cf0b748a57b589f4f0ac12f91461989158d58d0892bf6fc2c1626cf574e7e2b9da4b0e35f72dfd88f9048
+CARGO_DEPS_SITE = https://src.fedoraproject.org/repo/pkgs/cargo/$(CARGO_DEPS_SOURCE)/sha512/$(CARGO_DEPS_SHA512)
 CARGO_DEPS_SOURCE = cargo-$(CARGO_VERSION)-vendor.tar.xz
 
 CARGO_INSTALLER_VERSION = 4f994850808a572e2cc8d43f968893c8e942e9bf
@@ -70,7 +70,7 @@ HOST_CARGO_SNAP_OPTS = \
 	$(if $(VERBOSE),--verbose)
 
 HOST_CARGO_ENV = \
-	RUSTFLAGS="-Clink-arg=-Wl,-rpath,$(HOST_DIR)/lib" \
+	RUSTFLAGS="-Clink-arg=-Wl,-rpath,$(HOST_DIR)/usr/lib" \
 	CARGO_HOME=$(HOST_CARGO_HOME)
 
 define HOST_CARGO_BUILD_CMDS
@@ -79,13 +79,14 @@ define HOST_CARGO_BUILD_CMDS
 endef
 
 define HOST_CARGO_INSTALL_CMDS
-	$(INSTALL) -D -m 0755 $(@D)/target/release/cargo $(HOST_DIR)/bin/cargo
+	$(INSTALL) -D -m 0755 $(@D)/target/release/cargo $(HOST_DIR)/usr/bin/cargo
 	$(INSTALL) -D package/cargo/config.in \
 		$(HOST_DIR)/share/cargo/config
-	$(SED) 's/@RUST_TARGET_NAME@/$(RUST_TARGET_NAME)/' \
+	$(SED) 's/@RUSTC_TARGET_NAME@/$(RUSTC_TARGET_NAME)/' \
 		$(HOST_DIR)/share/cargo/config
 	$(SED) 's/@CROSS_PREFIX@/$(notdir $(TARGET_CROSS))/' \
 		$(HOST_DIR)/share/cargo/config
 endef
 
-$(eval $(host-generic-package))
+$(eval $(host-generic-package)):w
+
